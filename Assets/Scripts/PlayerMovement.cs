@@ -9,13 +9,15 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer sprite;
     private Animator anim;
 
+
     [SerializeField] private LayerMask jumpableGround;
 
-    private float dirX=0f;
-    [SerializeField] private float moveSpeed=7f;
-    [SerializeField] private float jumpForce=14f;
+    private float dirX = 0f;
+    [SerializeField] private float moveSpeed = 7f;
+    [SerializeField] private float jumpForce = 14f;
 
-    private enum MovementState{idle,running,jumping,falling}
+    private enum MovementState { idle, running, jumping, falling }
+    
     
 
     // Start is called before the first frame update
@@ -71,5 +73,19 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded(){
        return Physics2D.BoxCast(coll.bounds.center,coll.bounds.size,0f,Vector2.down,.1f,jumpableGround);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Trap")
+        {
+            anim.SetBool("death", true);
+        }
+    }
+
+
+    public void GameObjectSetInactive()
+    {
+        gameObject.SetActive(false);
     }
 }  
