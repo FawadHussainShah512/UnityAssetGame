@@ -16,8 +16,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpForce = 14f;
 
+<<<<<<< Updated upstream
     private enum MovementState { idle, running, jumping, falling }
     
+=======
+    private enum MovementState{idle,running,jumping,falling}
+
+    [SerializeField] private AudioSource jumpSoundEffect;
+>>>>>>> Stashed changes
     
 
     // Start is called before the first frame update
@@ -36,10 +42,12 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
+            
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            jumpSoundEffect.Play();
         }
-
-       UpdateAnimationState();
+         
+        UpdateAnimationState();
        
     }
 
@@ -75,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
        return Physics2D.BoxCast(coll.bounds.center,coll.bounds.size,0f,Vector2.down,.1f,jumpableGround);
     }
 
+<<<<<<< Updated upstream
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Trap")
@@ -86,6 +95,18 @@ public class PlayerMovement : MonoBehaviour
 
     public void GameObjectSetInactive()
     {
+=======
+
+    private void onCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Trap"))
+        {
+           anim.SetBool("Death",true);
+        }
+    }
+
+    public void GameObjectSetActive(){
+>>>>>>> Stashed changes
         gameObject.SetActive(false);
     }
 }  
